@@ -66,5 +66,5 @@ if __name__ == '__main__':
                             "labelled_images_splitted/" +str(split_images[i][1]) + "/" + file[:-4] + ".png")
                     elif file.endswith("label.png"):
                         np_array = convert_png_to_array(split_images[i][0])
-                        np.save("labelled_images_splitted/" +str(split_images[i][1]) + "/" + file[:-4] + ".npy", np_array)
+                        np.save("labelled_images_splitted/" +str(split_images[i][1]) + "/" + file[:-4] + "_street_mask.npy", np_array)
 
