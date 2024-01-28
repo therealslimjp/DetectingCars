@@ -56,12 +56,25 @@ def model3(image: PIL.Image) -> PIL.Image:
     return image
 
 
-def process_coordinates(x: int, y: int) -> PIL.Image:
+def process_coordinates(x: int, y: int, model:int=0) -> PIL.Image:
     width, height = 400, 300
     color = random.choice(['red', 'green', 'blue', 'yellow', 'black'])
     image = PIL.Image.new('RGB', (width, height), color)
     draw = image.resize((500, 500))
     return draw
+
+def process_coordinates_with_all_models_at_once(x: int, y: int) -> PIL.Image:
+    width, height = 400, 300
+    color = random.choice(['red', 'green', 'blue', 'yellow', 'black'])
+    image = PIL.Image.new('RGB', (width, height), color)
+    draw = image.resize((500, 500))
+    return [draw,draw,draw]
+
+
+def identifyCars(image: np.ndarray, model: int = 0) -> list:
+    image= process_image(image, model)
+    return image
+
 
 
 def process_image(image_array: np.ndarray, model: int = 0) -> PIL.Image:

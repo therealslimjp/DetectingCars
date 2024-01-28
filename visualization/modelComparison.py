@@ -28,6 +28,11 @@ with gr.Blocks() as modelCompare:
                     inputs=[input_image,model_choice],
                     outputs=output_image
                 )
+                detect_from_coords_button.click(
+                    fn=process_coordinates,
+                    inputs=[x_coordinates,y_coordinates,model_choice],
+                    outputs=output_image
+                )
         with gr.Tab("All at once"):
             with gr.Row():
 
@@ -52,4 +57,9 @@ with gr.Blocks() as modelCompare:
                     fn=process_image_with_all_models_at_once,
                     inputs=input_image,
                     outputs=[output_image_model1,output_image_model2,output_image_model3]
+                )
+                detect_from_coords_button.click(
+                    fn=process_coordinates_with_all_models_at_once,
+                    inputs=[x_coordinates,y_coordinates],
+                    outputs=[output_image_model1, output_image_model2, output_image_model3]
                 )
