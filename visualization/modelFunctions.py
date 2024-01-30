@@ -7,10 +7,9 @@ from CoordImageLoader import get_image_for_coords
 
 models = get_all_models()
 
-def identifyCars(image: np.ndarray, model: int = 0) -> list:
-    image= process_image(image, model)
-    return image
-
+def identify_cars(image: np.ndarray, model: int = 0) -> list:
+    prediction_image, prediction_mask, preditcion_np = models[model].segment_image(image)
+    return preditcion_np
 
 def process_image(image_array: np.ndarray, model: int = 0) -> PIL.Image:
     global models

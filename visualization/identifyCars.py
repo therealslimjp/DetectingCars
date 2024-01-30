@@ -5,14 +5,15 @@ from modelFunctions import *
 import numpy as np
 import plotly.graph_objects as go
 
-def identifyCars(image):
-    #todo image= process_image(image)
-    image= convert_to_grayscale(image)
-    num_cars, labeled_image = connected_components(image)
+def identifyCars(image_array):
+    image = PIL.Image.fromarray(image_array)
+    image_mask= identify_cars(image)
+    #grey_image= convert_to_grayscale(image_mask)
+    num_cars, labeled_image = connected_components(image_mask)
     painted_image = paint_cars(labeled_image)
     centroids = calculate_centroids(num_cars, labeled_image)
     distances = calculate_distances(centroids)
-    plot= create_plot(centroids, distances, painted_image)
+    plot= create_plot(centroids, distances, painted_image,image)
     return plot
 
 
@@ -39,16 +40,36 @@ with gr.Blocks() as identifyAllCars:
         )
 
 
-def create_plot(centroids, distances, colored_image_for_plotly):
+def create_plot(centroids, distances, colored_image_for_plotly, background_image):
+    if colored_image_for_plotly.mode != 'RGBA':
+        colored_image_for_plotly = colored_image_for_plotly.convert('RGBA')
+    if background_image.mode != 'RGBA':
+        background_image = background_image.convert('RGBA')
+
+    mask = Image.new('L', colored_image_for_plotly.size, 0)  # Black mask
+    pixels = colored_image_for_plotly.load()
+    mask_pixels = mask.load()
+    for y in range(colored_image_for_plotly.size[1]):
+        for x in range(colored_image_for_plotly.size[0]):
+            if pixels[x, y] != (0, 0, 0, 255):  # Non-black pixel
+                mask_pixels[x, y] = 255  # Set mask to white
+
+    background_image_resized = background_image.resize(colored_image_for_plotly.size)
+
+    blended_image = Image.new('RGBA', background_image_resized.size)
+    blended_image.paste(background_image_resized, (0, 0))
+    blended_image.paste(colored_image_for_plotly, (0, 0), mask=mask)
+
     fig = go.Figure()
-    img_width, img_height = colored_image_for_plotly.size
+    img_width, img_height = blended_image.size
     scale_factor = 1
     adjusted_centroids = [(x, img_height - y) for x, y in centroids]
 
     for i, (x, y) in enumerate(adjusted_centroids):
+        # multiple by 2 to account for the fact that the image is 500x500 but the plotly figure is 1000x1000
         hovertext = f"Car {i}<br>" + "<br>".join(
-            [f"Distance to Car {j}: {dist:.2f}" for (k, j), dist in distances.items() if k == i] +
-            [f"Distance to Car {k}: {dist:.2f}" for (k, j), dist in distances.items() if j == i]
+            [f"Distance to Car {j}: {2*int(dist)}" for (k, j), dist in distances.items() if k == i] +
+            [f"Distance to Car {k}: {2*int(dist)}" for (k, j), dist in distances.items() if j == i]
         )
         color = colored_image_for_plotly.getpixel((int(x), img_height - int(y)))
         color_rgba = f'rgba({color[0]}, {color[1]}, {color[2]}, 1)'
@@ -60,7 +81,7 @@ def create_plot(centroids, distances, colored_image_for_plotly):
     fig.update_yaxes(showgrid=False, visible=False, range=[0, img_height])
     fig.add_layout_image(
         dict(
-            source=colored_image_for_plotly,
+            source=blended_image,
             xref="x",
             yref="y",
             x=0,
@@ -85,22 +106,6 @@ def create_plot(centroids, distances, colored_image_for_plotly):
     )
 
     return fig
-
-def convert_to_grayscale(image):
-        # Convert the image to grayscale
-    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    # make it to 0 and 255
-    gray_image[gray_image == 38] = 255
-    print(np.unique(gray_image))
-
-    # Check if the image is already binary
-    if not np.array_equal(np.unique(gray_image), [0, 38]):
-        print("not binary")
-        # Apply a threshold to convert it to binary
-        _, binary_image = cv2.threshold(gray_image, 128, 255, cv2.THRESH_BINARY)
-    else:
-        binary_image = gray_image
-    return binary_image
 
 def dfs(image_arr, labels, x, y, current_label):
     # if is out of bounds
