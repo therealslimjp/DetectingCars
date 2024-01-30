@@ -17,4 +17,4 @@ tabbed_interface = gr.TabbedInterface(
 
 if __name__ == '__main__':
     print("Starting Gradio Server...")
-    tabbed_interface.launch()
+    tabbed_interface.launch(server_name="0.0.0.0", server_port=7860)
