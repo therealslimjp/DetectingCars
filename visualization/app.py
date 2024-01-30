@@ -1,10 +1,10 @@
 import gradio as gr
 
 
-from visualization.datasetSample import datasetSample
-from visualization.identifyCars import identifyAllCars
-from visualization.modelComparison import modelCompare
-from visualization.modelInformation import modelInfo
+from datasetSample import datasetSample
+from identifyCars import identifyAllCars
+from modelComparison import modelCompare
+from modelInformation import modelInfo
 
 
 
@@ -16,4 +16,5 @@ tabbed_interface = gr.TabbedInterface(
 )
 
 if __name__ == '__main__':
+    print("Starting Gradio Server...")
     tabbed_interface.launch()

@@ -3,7 +3,7 @@ import numpy as np
 import gradio as gr
 from fastai.vision.all import *
 from modelFactory import get_all_models
-from visualization.CoordImageLoader import get_image_for_coords
+from CoordImageLoader import get_image_for_coords
 
 models = get_all_models()
 

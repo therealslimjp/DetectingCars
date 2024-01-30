@@ -135,8 +135,11 @@ def combine_image_and_mask(image, prediction_array, color = (255, 255, 255, 255)
 
 def get_all_models():
     models = []
+    print("Loading FastAI Model")
     models.append(FastaiUnet("FastAi Car Detection", {'Dice': 0.77}, "best_model_car", color= (200, 0, 200, 100)))
+    print("Loading Transformer Model")
     models.append(TransformerModel("Transformer Car Detection", {'Dice': 0.76}, "./models/TransformerCarModel", color=(200, 0, 200, 100)))
+    print("Loading FastAI Street Model")
     models.append(FastaiUnet("FastAi Street Detection", {'Dice': 0.9}, "best_model_street", color= (0, 200, 200, 100)))
     return models
 
