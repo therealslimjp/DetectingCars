@@ -2,17 +2,18 @@ import gradio as gr
 import os
 import random
 import PIL.Image
+from fastai.vision.all import *
 
-image_folder = '../modeling/images'
-image_files = [f for f in os.listdir(image_folder) if f.endswith('.png')]
+image_folder = './images'
+image_files = get_image_files(image_folder)
 
 
 def load_random_image():
     images = []
     for _ in range(3):  # Load 3 random images
         random_image = random.choice(image_files)
-        img_path = os.path.join(image_folder, random_image)
-        img = PIL.Image.open(img_path)
+
+        img = PIL.Image.open(random_image)
         img = img.resize((256, 256))  # Resize the image
         images.append(img)
     return images
