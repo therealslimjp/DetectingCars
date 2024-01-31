@@ -118,14 +118,14 @@ class TransformerModel(SegmentationModel):
 
 # helper function to combine prediction array and image
 def combine_image_and_mask(image, prediction_array, color = (255, 255, 255, 255)):
-    prediction_mask = PIL.Image.fromarray(prediction_array.astype(np.uint8) * 255).convert("RGBA")
+    prediction_mask = PIL.Image.fromarray(prediction_array.astype(np.uint8) * 255).convert("RGBA").resize((500, 500))
 
     # change the color from the white pixels to purple
     prediction_mask.putdata(
         [color if pixel == (255, 255, 255, 255) else pixel for pixel in prediction_mask.getdata()])
 
     # Resize the image to size of mask
-    image_resized = image.resize(prediction_mask.size).convert("RGBA")
+    image_resized = image.resize((500, 500)).convert("RGBA")
 
     # Create a new image by blending the resized original image and the mask
     combined_image = PIL.Image.blend(image_resized, prediction_mask, alpha=0.4)
