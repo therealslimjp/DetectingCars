@@ -2,6 +2,8 @@ import gradio as gr
 import pandas as pd
 from modelFunctions import *
 from CoordImageLoader import *
+from datasetSample import *
+
 
 with gr.Blocks() as modelCompare:
 
@@ -25,17 +27,24 @@ with gr.Blocks() as modelCompare:
                     modelCompare.load(fn=filter_map, inputs=[lat_coordinates, lon_coordinates], outputs=map)
                     btn.click(fn=filter_map, inputs=[lat_coordinates, lon_coordinates], outputs=map)
                     detect_from_coords_button = gr.Button("Run Inference for map")
-                    clear_coords_button = gr.Button("Reset Coordinates")
                 with gr.Tab("Upload Image"):
+                    with gr.Row():
+                        load_sample_image_button = gr.Button("Load sample image")
+                        clear_image_button = gr.Button("Reset Image")
+
                     input_image = gr.Image(type="numpy", label="Upload Image, best with 1000*1000px")
-                    detect_from_image_button = gr.Button("Run Inference")
-                    clear_image_button = gr.Button("Reset Image")
+
+                    with gr.Row():
+                        detect_from_image_button = gr.Button("Run Inference for Image")
+
             with gr.Column():
                 outputs = gr.Gallery(type="numpy", label="Output Images", show_label=False, columns=1)
                 clear_output_image_button = gr.Button("Discard Results")
 
             clear_output_image_button.click(fn=lambda: [], inputs=None, outputs=outputs)
             clear_image_button.click(fn=lambda: None, inputs=None, outputs=input_image)
+
+            load_sample_image_button.click(fn=get_sample_image, inputs=[], outputs=input_image)
 
             detect_from_image_button.click(
                 fn=process_image,

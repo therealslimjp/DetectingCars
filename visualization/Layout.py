@@ -31,8 +31,8 @@ with gr.Blocks(theme=theme, css=css) as Layout:
 
     with gr.Row(): # Tabbed Interface
         tabbed_interface = gr.TabbedInterface(
-            [modelCompare, identifyAllCars, modelCombined, modelInfo, datasetSample],
-            tab_names=["Try different Models", "Identify all Cars", "Combined Models" , "Model Information", "Dataset Sample"],
+            [modelCompare, identifyAllCars, modelCombined, datasetSample, modelInfo],
+            tab_names=["Try different Models", "Identify all Cars", "Combined Models", "Sample Images", "Information"],
         )
 
     gr.Markdown("### Created By: Jonas Erbacher, Jan-Philip Töpfer and Benedikt Voß")

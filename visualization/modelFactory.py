@@ -39,7 +39,8 @@ def get_mask(path):
 
 
 class SegmentationMetrics(ABC):
-    def __init__(self, training_time, epochs, dice_score, iou_score, accuracy):
+    def __init__(self,architecture, training_time, epochs, dice_score, iou_score, accuracy):
+        self.architecture = architecture
         self.training_time = training_time
         self.epochs = epochs
         self.dice_score = dice_score
@@ -50,7 +51,7 @@ class SegmentationMetrics(ABC):
         return f"Training time: {self.training_time}\nEpochs: {self.epochs}\nDice score: {self.dice_score}\nIoU score: {self.iou_score}\nAccuracy: {self.accuracy}"
 
     def get_metrics_dict(self):
-        return {"Training time": self.training_time, "Epochs": self.epochs, "Dice score": self.dice_score, "IoU score": self.iou_score, "Accuracy": self.accuracy}
+        return {"Architecture": self.architecture,"Training time": self.training_time, "Epochs": self.epochs, "Dice score": self.dice_score, "IoU score": self.iou_score, "Accuracy": self.accuracy}
 
 
 # Define an abstract base class for image segmentation models
@@ -147,16 +148,20 @@ def combine_image_and_mask(image, prediction_array, color = (255, 255, 255, 255)
 
     return combined_image, prediction_mask
 
+
 models = []
+
+
 print("Loading FastAI Model")
-FastaiCarMetrics = SegmentationMetrics(training_time="1h", epochs=30, dice_score=0.7299, iou_score=0.6179, accuracy=0.9995)
+FastaiCarMetrics = SegmentationMetrics(architecture="resnet34", training_time="63 min", epochs=21, dice_score=0.7299, iou_score=0.6179, accuracy=0.9995)
 models.append(FastaiUnet("FastAi Car Detection", FastaiCarMetrics, "best_model_car", color= (200, 0, 200, 100)))
 print("Loading Transformer Model")
-TransformerModelMetrcis = SegmentationMetrics(training_time="1h", epochs=20, dice_score=0.7948, iou_score=0.6595, accuracy=0.9979)
+TransformerModelMetrcis = SegmentationMetrics(architecture="nvidia\mit_b5", training_time="78 min*", epochs=20, dice_score=0.7948, iou_score=0.6595, accuracy=0.9979)
 models.append(TransformerModel("Transformer Car Detection", TransformerModelMetrcis, "./models/TransformerCarModel", color=(200, 0, 200, 100)))
 print("Loading FastAI Street Model")
-FastAiStreetMetrics = SegmentationMetrics(training_time="1h", epochs=30, dice_score=0.7963, iou_score=0.6859, accuracy=0.9834)
+FastAiStreetMetrics = SegmentationMetrics(architecture="resnet34", training_time="72 min", epochs=24, dice_score=0.7963, iou_score=0.6859, accuracy=0.9834)
 models.append(FastaiUnet("FastAi Street Detection", FastAiStreetMetrics, "best_model_street", color= (0, 200, 200, 100)))
+
 
 def get_all_models():
     global models

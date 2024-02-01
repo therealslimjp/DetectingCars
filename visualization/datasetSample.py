@@ -24,9 +24,13 @@ def load_random_image():
         random_image = random.choice(find_files_by_pattern(image_folder, ".jpg"))
 
         img = PIL.Image.open(random_image)
-        img = img.resize((256, 256))  # Resize the image
+        img = img.resize((500, 500))  # Resize the image
         images.append(img)
     return images
+
+def get_sample_image():
+    #return one sample image
+    return load_random_image()[0]
 
 
 with gr.Blocks() as datasetSample:

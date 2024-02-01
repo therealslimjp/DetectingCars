@@ -4,6 +4,7 @@ import pandas as pd
 from modelFunctions import *
 import numpy as np
 import plotly.graph_objects as go
+from datasetSample import *
 
 def identifyCars(image_array):
     image = PIL.Image.fromarray(image_array)
@@ -20,9 +21,11 @@ def identifyCars(image_array):
 with gr.Blocks() as identifyAllCars:
     with gr.Row():
         with gr.Column():
+            with gr.Row():
+                load_sample_image_button = gr.Button("Load sample image", variant="secondary")
+                clear_image_button = gr.Button("Reset Image", variant="secondary")
             input_image = gr.Image(type="numpy", label="Upload Image, best with 1000*1000px")
             detect_from_image_button = gr.Button("Detect Cars")
-            clear_image_button = gr.Button("Reset Image")
         with gr.Column():
             output_plot = gr.Plot(label="Car Plot")
 
@@ -38,6 +41,8 @@ with gr.Blocks() as identifyAllCars:
             inputs=[input_image],
             outputs=[output_plot]
         )
+
+        load_sample_image_button.click(fn=get_sample_image, inputs=[], outputs=input_image)
 
 
 def create_plot(centroids, distances, colored_image_for_plotly, background_image):
