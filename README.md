@@ -27,3 +27,9 @@ Detailed modelling steps are provided in the README.md within the modelling fold
 ### Visualization
 Here, we provide code for visualization. We utilized gradio to develop an app that integrates all project components. 
 Detailed visualization steps are outlined in the README.md within the visualization folder.
+
+**Due to large files the models and images are not included in the vizualizations those have to be downloaded from the following kaggle datasets: 
+https://www.kaggle.com/datasets/jonas06/tds-models
+https://www.kaggle.com/datasets/jonas06/sample-data**
+
+A Zipfolder where everything is inplace is accessible here: 
