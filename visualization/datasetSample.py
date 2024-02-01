@@ -4,7 +4,7 @@ import random
 import PIL.Image
 from fastai.vision.all import *
 
-image_folder = '.\\images'
+image_folder = 'images'
 
 def find_files_by_pattern(folder, extension):
     matching_files = []
@@ -13,7 +13,7 @@ def find_files_by_pattern(folder, extension):
         for file in files:
             # check if file ends with extension
             if file.endswith(extension):
-                matching_files.append(root + "\\" + file)
+                matching_files.append(os.path.join(root, file))
 
     return matching_files
 
