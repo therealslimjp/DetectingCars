@@ -160,3 +160,5 @@ cython_debug/
 #.idea/
 /visualization/models/*
 /visualization/models/TransformerCarCheckpoint/
+/visualization/images/*
+/visualization/images/
