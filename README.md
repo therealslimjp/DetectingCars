@@ -28,7 +28,7 @@ Detailed modelling steps are provided in the README.md within the modelling fold
 Here, we provide code for visualization. We utilized gradio to develop an app that integrates all project components. 
 Detailed visualization steps are outlined in the README.md within the visualization folder.
 
-**Due to large files the models and images are not included in the vizualizations those have to be downloaded from the following kaggle datasets and notebooks: 
+**Due to large files the models and images are not included in the vizualizations those have to be downloaded from the following kaggle datasets and notebooks:** 
 - https://www.kaggle.com/datasets/jonas06/tds-models
 - https://www.kaggle.com/datasets/jonas06/sample-data
 - https://www.kaggle.com/datasets/jonas06/car-street-data
@@ -37,6 +37,6 @@ Detailed visualization steps are outlined in the README.md within the visualizat
 - https://www.kaggle.com/benediktvoss/fastai-carsegmentation-filtereddata
 - https://www.kaggle.com/benediktvoss/transformercarsegmentation
 - https://www.kaggle.com/jonas06/street-modell
-**
 
-A Zipfolder where everything is inplace is accessible here: 
+
+A Zipfolder that can be run without any modifications can be found here: https://drive.google.com/file/d/1QVlmwP5-4zZNELSPIBckwus6WBnavkZg/view?usp=sharing
