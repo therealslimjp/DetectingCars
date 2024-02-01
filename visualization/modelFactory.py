@@ -24,7 +24,7 @@ def find_files_by_pattern(folder, pattern):
 def get_images_all(name):
     global image_folder_path
     image_files = []
-    for file in find_files_by_pattern(image_folder_path, "img.png"):
+    for file in find_files_by_pattern(image_folder_path, "img.jpg"):
         image_files.append(Path(file))
     return image_files
 
@@ -36,6 +36,21 @@ def get_mask(path):
     # add the name mask.npy to the path
     path = path.joinpath("label.npy")
     return np.load(path)
+
+
+class SegmentationMetrics(ABC):
+    def __init__(self, training_time, epochs, dice_score, iou_score, accuracy):
+        self.training_time = training_time
+        self.epochs = epochs
+        self.dice_score = dice_score
+        self.iou_score = iou_score
+        self.accuracy = accuracy
+
+    def __str__(self):
+        return f"Training time: {self.training_time}\nEpochs: {self.epochs}\nDice score: {self.dice_score}\nIoU score: {self.iou_score}\nAccuracy: {self.accuracy}"
+
+    def get_metrics_dict(self):
+        return {"Training time": self.training_time, "Epochs": self.epochs, "Dice score": self.dice_score, "IoU score": self.iou_score, "Accuracy": self.accuracy}
 
 
 # Define an abstract base class for image segmentation models
@@ -61,7 +76,7 @@ class FastaiUnet(SegmentationModel):
         super().__init__(name, metrics, color)
 
         block = DataBlock(blocks=(ImageBlock, MaskBlock(codes=["nothing", "something"])),
-                                         splitter=GrandparentSplitter(train_name='train', valid_name='test'),
+                                         splitter=GrandparentSplitter(train_name='Swisstopo', valid_name='Swisstopo'),
                                          get_items=get_images_all,
                                          get_y=get_mask,
                                          batch_tfms=aug_transforms(size=500, max_lighting=0.3))
@@ -132,15 +147,19 @@ def combine_image_and_mask(image, prediction_array, color = (255, 255, 255, 255)
 
     return combined_image, prediction_mask
 
+models = []
+print("Loading FastAI Model")
+FastaiCarMetrics = SegmentationMetrics(training_time="1h", epochs=30, dice_score=0.7299, iou_score=0.6179, accuracy=0.9995)
+models.append(FastaiUnet("FastAi Car Detection", FastaiCarMetrics, "best_model_car", color= (200, 0, 200, 100)))
+print("Loading Transformer Model")
+TransformerModelMetrcis = SegmentationMetrics(training_time="1h", epochs=20, dice_score=0.7948, iou_score=0.6595, accuracy=0.9979)
+models.append(TransformerModel("Transformer Car Detection", TransformerModelMetrcis, "./models/TransformerCarModel", color=(200, 0, 200, 100)))
+print("Loading FastAI Street Model")
+FastAiStreetMetrics = SegmentationMetrics(training_time="1h", epochs=30, dice_score=0.7963, iou_score=0.6859, accuracy=0.9834)
+models.append(FastaiUnet("FastAi Street Detection", FastAiStreetMetrics, "best_model_street", color= (0, 200, 200, 100)))
 
 def get_all_models():
-    models = []
-    print("Loading FastAI Model")
-    models.append(FastaiUnet("FastAi Car Detection", {'Dice': 0.77}, "best_model_car", color= (200, 0, 200, 100)))
-    print("Loading Transformer Model")
-    models.append(TransformerModel("Transformer Car Detection", {'Dice': 0.76}, "./models/TransformerCarModel", color=(200, 0, 200, 100)))
-    print("Loading FastAI Street Model")
-    models.append(FastaiUnet("FastAi Street Detection", {'Dice': 0.9}, "best_model_street", color= (0, 200, 200, 100)))
+    global models
     return models
 
 

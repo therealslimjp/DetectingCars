@@ -4,6 +4,7 @@ from datasetSample import datasetSample
 from identifyCars import identifyAllCars
 from modelComparison import modelCompare
 from modelInformation import modelInfo
+from CombinedModels import modelCombined
 
 theme = gr.themes.Monochrome(
     primary_hue="stone",
@@ -20,6 +21,9 @@ css= """
 .caption-label{
     background-color: transparent;
 }
+.tab-nav button {
+    font-size: 1.3rem;
+}
 """
 
 with gr.Blocks(theme=theme, css=css) as Layout:
@@ -27,8 +31,8 @@ with gr.Blocks(theme=theme, css=css) as Layout:
 
     with gr.Row(): # Tabbed Interface
         tabbed_interface = gr.TabbedInterface(
-            [modelCompare, identifyAllCars, modelInfo, datasetSample],
-            tab_names=["Try different Models", "Identify all Cars", "Model Information", "Dataset Sample"],
+            [modelCompare, identifyAllCars, modelCombined, modelInfo, datasetSample],
+            tab_names=["Try different Models", "Identify all Cars", "Combined Models" , "Model Information", "Dataset Sample"],
         )
 
     gr.Markdown("### Created By: Jonas Erbacher, Jan-Philip Töpfer and Benedikt Voß")

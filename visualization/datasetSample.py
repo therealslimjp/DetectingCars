@@ -4,14 +4,24 @@ import random
 import PIL.Image
 from fastai.vision.all import *
 
-image_folder = './images'
-image_files = get_image_files(image_folder)
+image_folder = '.\\images'
 
+def find_files_by_pattern(folder, extension):
+    matching_files = []
+
+    for root, dirs, files in os.walk(folder):
+        for file in files:
+            # check if file ends with extension
+            if file.endswith(extension):
+                matching_files.append(root + "\\" + file)
+
+    return matching_files
 
 def load_random_image():
     images = []
+
     for _ in range(3):  # Load 3 random images
-        random_image = random.choice(image_files)
+        random_image = random.choice(find_files_by_pattern(image_folder, ".jpg"))
 
         img = PIL.Image.open(random_image)
         img = img.resize((256, 256))  # Resize the image

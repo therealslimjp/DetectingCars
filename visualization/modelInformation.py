@@ -1,16 +1,17 @@
 import gradio as gr
-import pandas as pd
+import pandas as pd+
+from modelFactory import get_all_models
 
+models = get_all_models()
 
 # -----------MODEL INFORMATION -------------#
 with gr.Blocks() as modelInfo:
-    df = pd.DataFrame({
-        "A": [14, 4, 5, 4, 1],
-        "B": [5, 2, 54, 3, 2],
-        "C": [20, 20, 7, 3, 8],
-        "D": [14, 3, 6, 2, 6],
-        "E": [23, 45, 64, 32, 23]
-    })
+    global models
+    # combine all model metrics into dataframe
+    df = pd.DataFrame(columns=['Model', 'Accuracy', 'Precision', 'Recall', 'F1-Score'])
+    for model in models:
+        metrci_dict = model.metric.get_metrics_dict()
+
 
     # Applying style to highlight the maximum value in each row
     styler = df.style.highlight_max(color='lightgreen', axis=0)
