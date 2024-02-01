@@ -20,8 +20,8 @@ with gr.Blocks() as modelCompare:
             with gr.Column():
                 with gr.Tab("Select Coordinates"):
                     with gr.Row():
-                        lat_coordinates = gr.Number(value=47.53224, label="Latitude Coordinate", interactive=True, step=0.0001, precision=5)
-                        lon_coordinates = gr.Number(value=8.79798, label="Logitude Coordinate", interactive=True, step=0.0001, precision=5)
+                        lat_coordinates = gr.Number(value=46.9653, label="Latitude Coordinate", interactive=True, step=0.0001, precision=5)
+                        lon_coordinates = gr.Number(value=7.4317, label="Logitude Coordinate", interactive=True, step=0.0001, precision=5)
                         btn = gr.Button(value="Reload Map")
                     map = gr.Plot()
                     modelCompare.load(fn=filter_map, inputs=[lat_coordinates, lon_coordinates], outputs=map)

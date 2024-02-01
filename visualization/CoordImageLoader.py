@@ -46,7 +46,7 @@ def download_image(x, y, output_folder):
 
 def extract_region(image, x, y, width, height):
     center_x = (math.floor(x*10) % 10000)
-    center_y = (math.floor(y*10) % 10000)
+    center_y = 10000-(math.floor(y*10) % 10000)
 
     # Ensure the extraction region doesn't go beyond the boundaries of the image
     image_width, image_height = image.size
