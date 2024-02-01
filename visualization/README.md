@@ -8,6 +8,7 @@ code necessary for loading the model (e.g. dataloader).
 
 To avoid incompatibility problems, we decided to put the app into a 
 docker container. The dockerfile is located in this directory of the project.
+Installing requirements takes quite some time.
 You can build the docker image by running the following command in the terminal:
 
 ```bash
