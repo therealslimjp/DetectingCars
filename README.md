@@ -1,28 +1,29 @@
 # DetectingCars
 
 ## Introduction
-In our project we want to detect cars in aerial images.
-We decided to train different Machine-Learning models that help in identifying streets and cars in spatial data.
-A few use cased we thought of when using our application were:
-1. Early traffic jam detection
-2. Analysis of road utilization. Therefore detecting streets that have expansion potential cause of high utilization.
+Our project aims to detect cars in aerial images, utilizing various machine learning models to identify streets and cars within spatial data. 
+Some envisioned use cases for our application include:
+1. Early detection of traffic jams. 
+2. Analysis of road utilization to identify streets with expansion potential due to high utilization.
 
 ## Process
-We decided to split our project into 3 main parts:
+We structured our project into three main parts:
 1. Preprocessing
 2. Modelling
 3. Visualization
 
 ### Preprocessing
-In this folder, we provide the code for data procurement and preprocessing. We downloaded images from swisstopo and created masks with cars and streets via labelme.
-To evaluate the performance of our model on external data, we also downloaded images from the University of Twente.
-The preprocessing steps in detail are described in the README.md in the preprocessing folder.
+Within this section, we offer code for data procurement and preprocessing. 
+We obtained images from swisstopo and generated masks delineating cars and streets using labelme. 
+Additionally, to evaluate model performance on external data, we acquired images from the University of Twente. 
+Detailed preprocessing steps are outlined in the README.md within the preprocessing folder.
 
 ### Modelling
-In this folder, we provide the code for the modelling. For our project, we developed multiple models: two for cars and one for streets. 
-The rationale was to assess model performance when trained on specific tasks and when combined. 
-The modelling steps in detail are described in the README.md in the modelling folder.
+This section includes code for model development. 
+We created multiple models for our project: two for cars and one for streets. 
+Our approach aimed to evaluate model performance when trained for specific tasks and when integrated. 
+Detailed modelling steps are provided in the README.md within the modelling folder.
 
 ### Visualization
-In this folder, we provide the code for the visualization. We used gradio to create an app that integrates all components into one.
-The visualization steps in detail are described in the README.md in the visualization folder.
+Here, we provide code for visualization. We utilized gradio to develop an app that integrates all project components. 
+Detailed visualization steps are outlined in the README.md within the visualization folder.

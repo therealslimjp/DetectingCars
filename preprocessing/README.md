@@ -1,19 +1,21 @@
 # Preprocessing
 
-In this folder, we provide the code for preprocessing the data. The preprocessing steps are as follows:
+Within this folder, we offer the code for data preprocessing, which encompasses the following steps:
 ## Cars:
-1. at first we downloaded the images from swwisstopo via a Download script
-2. then we created the masks manually with labelme and labelbox. We therefore marked every car in the images in a polygon.
-3. The labelprocess led us to JSON files that held information about the masks and the image. Thats why we then created the dataset with these JSONS. 
-Therefore we splitted the images and masks into 1000x1000 images. After that we created a train and test and validation split. (This happened in the Notebooks:)
-4. Because we also wanted to see how our model performs on external data we used a external Dataset from the University of Twente. Since the information about the masks
-was stored in a different way we had to preprocess the data differently. We therefore used the notebook: "Twente_cars.ipynb" to create the masks in our format. 
-After that the masks and images were also splitted into 1000x1000 images in the Nootebook: "splitting_twente.ipynb".
+1. Initially, we downloaded the images from swisstopo using a download script. 
+2. Subsequently, we manually created masks using labelme and labelbox, marking each car in the images within a polygon. 
+We then utilized the notebook "integration-tds.ipynb" to incorporate the labelbox masks into our dataset. 
+3. The labeling process generated JSON files containing information about the masks and the images. 
+Consequently, we constructed the dataset using these JSON files, dividing the images and masks into 1000x1000 segments. 
+We further performed a split into train, test, and validation sets, a process documented in the notebooks "split_in_1000x1000.ipynb" and "train_test_split.py". 
+4. In addition to our internal dataset, we evaluated the performance of our model on external data obtained from the University of Twente. 
+Due to differences in mask storage, we processed the Twente dataset differently, utilizing the notebook "Twente_cars.ipynb" to convert the masks into our desired format. 
+Following this conversion, we segmented the masks and images into 1000x1000 segments using the notebook "splitting_twente.ipynb".
 
 ## Street:
-1. We first trued to use the street masks from OSM for our Modell (Notebook: "Street_masks.ipynb" loads the masks from osmx into our dataset). 
-But we found out that the masks were not accurate enough. Therefore we decided to create our own masks.
-2. We then created the masks manually with labelme. We therefore marked every street in the images in a polygon.
-3. Similar to 3. in Cars we then created the dataset with these JSONS.
+1. Initially, we attempted to utilize street masks from OSM for our model, as depicted in the notebook "Street_masks.ipynb", which loads the masks from OSMX into our dataset. 
+However, we discovered that these masks lacked the necessary accuracy, prompting us to create our own masks. 
+2. Subsequently, we manually created masks using labelme, marking each street in the images within a polygon. 
+3. Similar to the process for cars, we generated the dataset using JSON files.
 
-Because we finally had two different datasets one for streets and one for cars we had to merge them. We therefore used the notebook: "Merge_Data.ipynb" to merge the datasets.
+Having obtained separate datasets for streets and cars, we needed to merge them. This task was accomplished using the notebook "Merge_Data.ipynb".
